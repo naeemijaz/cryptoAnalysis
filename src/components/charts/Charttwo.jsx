@@ -5,18 +5,19 @@ export default function Charttwo() {
     <>
     <AdvancedRealTimeChart 
 
-        width="1110"
-        height="575"
-        symbol= "NASDAQ:AAPL"
-        interval="D"
-        timezone="Etc/UTC"
-        theme="light"
-        style="1"
-        locale="en"
-        toolbar_bg="#f1f3f6"
-        enable_publishing="false"
-        allow_symbol_change="true"
-        container_id="tradingview_4585b"
+      width="100%"
+      height="550px"
+      symbol="BTCUSDT"
+      interval="D"
+      timezone="Etc/UTC"
+      theme="dark"
+      style="1"
+      locale="in"
+      toolbar_bg="#f1f3f6"
+      enable_publishing="false"
+      hide_side_toolbar="false"
+      allow_symbol_change="true"
+      container_id="tradingview"
 
     ></AdvancedRealTimeChart>
     </>

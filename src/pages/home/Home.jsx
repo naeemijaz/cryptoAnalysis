@@ -226,12 +226,6 @@ export default function Home() {
 
             </div>
             </div>
-            <div className="row heatmap mt20">
-            <div className="col-lg-12">
-                <Charttwo />
-
-            </div>
-            </div>
             <div className="row mt20 market_tickers_box">
             <div className="col-lg-6 market_tickers market_tickers_gainers">
                 <h4>
