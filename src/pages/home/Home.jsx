@@ -5,6 +5,7 @@ import Navbar from '../../components/navbar/Navbar'
 import Topbar from '../../components/topbar/Topbar'
 import { TechnicalAnalysis } from "react-ts-tradingview-widgets";
 import ChartThree from '../../components/charts/ChartThree'
+import { Link } from 'react-router-dom'
 
 export default function Home() {
   return (
@@ -106,9 +107,9 @@ export default function Home() {
             <div className="col-lg-4 crypto_market_caps_box">
                 <h4>
                 <img src="assets/images/img-inflow.jpg" width="25px" /> Inflows Data(BTC)
-                <a href="inflow-data.html" className="all">
+                <Link to={'/inflow-data'} className="all">
                     All
-                </a>
+                </Link>
                 </h4>
                 <table className="table table-bordered">
                 <thead>

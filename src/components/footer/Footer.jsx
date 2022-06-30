@@ -18,7 +18,7 @@ export default function Footer() {
             [email&nbsp;protected]
             </span>
         </Link>
-        <br /> Welcome to Crrypto Analysis, world's first crypto analysis site for
+        <br /> Welcome to Bitcoin Analysis, world's first crypto analysis site for
         crypto lovers and learners.
         </p>
     </div>
