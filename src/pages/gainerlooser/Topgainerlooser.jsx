@@ -1,9 +1,33 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import Footer from '../../components/footer/Footer'
 import Navbar from '../../components/navbar/Navbar'
 import Topbar from '../../components/topbar/Topbar'
 
 export default function Topgainerlooser() {
+
+
+    const [TopGainer, setTopGainer] = useState([]);
+    const [TopLooser, setTopLooser] = useState([]);
+
+    useEffect(() => {
+
+        axios.get(`https://qberg.mn/api/fetchCryptoFirstData`,{
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        })
+        .then(res => {
+            const response = res.data;
+            setTopGainer(response.data.altcoinsGainers);
+            setTopLooser(response.data.altcoinsLosers);
+            
+        })
+    },[]);
+
+    
+
 return (
 <>
     <Topbar />
@@ -33,7 +57,21 @@ return (
                                         <th scope="col">Change</th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody>
+                                
+                                {Object.values(TopGainer).map((items,key)=>{
+                                    
+                                    return(
+                                        <>
+                                            <tr key={key}>
+                                                {items.map((value, index)=>{    
+                                                    return<td key={index}>{value}</td>
+                                                })}
+                                             </tr>
+                                        </>
+                                    )
+                                })}
+                                </tbody>
                             </table>
                         </div>
                         <div className="col-lg-6 market_tickers market_tickers_loser">
@@ -51,6 +89,21 @@ return (
                                         <th scope="col">Change</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                
+                                {Object.values(TopLooser).map((items,key)=>{
+                                    
+                                    return(
+                                        <>
+                                            <tr key={key}>
+                                                {items.map((value, index)=>{    
+                                                    return<td key={index}>{value}</td>
+                                                })}
+                                             </tr>
+                                        </>
+                                    )
+                                })}
+                                </tbody>
                             </table>
                         </div>
                     </div>
