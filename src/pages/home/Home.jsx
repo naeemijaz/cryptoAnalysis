@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Charttwo from '../../components/charts/Charttwo'
 import Footer from '../../components/footer/Footer'
 import Navbar from '../../components/navbar/Navbar'
@@ -6,8 +6,45 @@ import Topbar from '../../components/topbar/Topbar'
 import { TechnicalAnalysis } from "react-ts-tradingview-widgets";
 import ChartThree from '../../components/charts/ChartThree'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 export default function Home() {
+
+    const [btcDominance, setBtcDominance] = useState([]);
+    const [totalMarketCap, setTotalMarketCap] = useState([]);
+    const [totalVolume, setTotalVolume] = useState([]);
+    const [inflowsDataBtc, setInflowsDataBtc] = useState([]);
+    const [topExchangesVolumeBtc, settopExchangesVolumeBtc] = useState([]);
+    const [top3AltcoinsGainers, settop3AltcoinsGainers] = useState([]);
+    const [top3AltcoinsLlosers, settop3AltcoinsLlosers] = useState([]);
+    const [top3GainersUsdt24, settop3GainersUsdt24] = useState([]);
+    const [top3LosersUsdt24, settop3LosersUsdt24] = useState([]);
+
+    useEffect(() => {
+
+        axios.get(`https://qberg.mn/api/homePageAnalysis`,{
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        })
+        .then(res => {
+            const response = res.data;
+            setBtcDominance(response.data.btc_dominance);
+            setTotalMarketCap(response.data.total_market_cap);
+            setTotalVolume(response.data.total_volume);
+            setInflowsDataBtc(response.data.inflows_data_btc);
+            settopExchangesVolumeBtc(response.data.top_exchanges_volume_btc);
+            settop3AltcoinsGainers(response.data.top_3_altcoins_gainers);
+            settop3AltcoinsLlosers(response.data.top_3_altcoins_losers);
+            settop3GainersUsdt24(response.data.top_3_gainers_usdt_24);
+            settop3LosersUsdt24(response.data.top_3_losers_usdt_24);
+            
+        })
+
+
+    },[]);
+
   return (
     <>
     <Topbar />
@@ -29,33 +66,22 @@ export default function Home() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>42.534%</td>
-                    <td>42.430%</td>
-                    <td>
-                        <span style={{ color: "green" }}>0.104%</span>{" "}
-                    </td>
-                    </tr>
+                    {Object.values(btcDominance).map((items,key)=>{
+                                        
+                        return(
+                            <>
+                                <tr key={key}>
+                                    {items.map((value, index)=>{    
+                                        return<td key={index}>{value}</td>
+                                    })}
+                                    </tr>
+                            </>
+                        )
+                    })}
                 </tbody>
                 </table>
             </div>
-            {/*<div class="col-lg-3 crypto_market_caps_box">
-                        <h4>ETH Dominance</h4>
-                        <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                            <th scope="col">Today</th>
-                            <th scope="col">Yesterday</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <td>15.423%</td>
-                            <td>15.549%</td>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </div>*/}
+            
             <div className="col-lg-4 crypto_market_caps_box">
                 <h4>
                 <img src="assets/images/img-market_cap.jpg" width="25px" /> Total Market Cap
@@ -69,13 +95,18 @@ export default function Home() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>929.41B</td>
-                    <td>951.7B</td>
-                    <td>
-                        <span style={{ color: "red" }}>-2.342%</span>{" "}
-                    </td>
-                    </tr>
+                    {Object.values(totalMarketCap).map((items,key)=>{
+                                            
+                        return(
+                            <>
+                                <tr key={key}>
+                                    {items.map((value, index)=>{    
+                                        return<td key={index}>{value}</td>
+                                    })}
+                                    </tr>
+                            </>
+                        )
+                    })}
                 </tbody>
                 </table>
             </div>
@@ -92,13 +123,18 @@ export default function Home() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>56.62B</td>
-                    <td>62.28B</td>
-                    <td>
-                        <span style={{ color: "red" }}>-9.083%</span>{" "}
-                    </td>
-                    </tr>
+                    {Object.values(totalVolume).map((items,key)=>{
+                                            
+                        return(
+                            <>
+                                <tr key={key}>
+                                    {items.map((value, index)=>{    
+                                        return<td key={index}>{value}</td>
+                                    })}
+                                    </tr>
+                            </>
+                        )
+                    })}
                 </tbody>
                 </table>
             </div>
@@ -119,44 +155,18 @@ export default function Home() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>
-                        14611{" "}
-                        <a
-                        href="javascript:void(0)"
-                        data-toggle="modal"
-                        data-target="#inflow_data_model"
-                        className="inflow_clicks"
-                        data-id="finalTInflow"
-                        >
-                        (Show Details)
-                        </a>
-                        <div id="finalTInflow" style={{ display: "none" }}>
-                        <p>
-                            🚨🚨🚨 14,611.15 #BTC ($304,497,518) aggregated inflows to
-                            #Gemini
-                        </p>
-                        </div>
-                    </td>
-                    <td>
-                        4502
-                        <a
-                        href="javascript:void(0)"
-                        data-toggle="modal"
-                        data-target="#inflow_data_model"
-                        className="inflow_clicks"
-                        data-id="finalYInflow"
-                        >
-                        (Show Details)
-                        </a>
-                        <div id="finalYInflow" style={{ display: "none" }}>
-                        <p>
-                            🚨🚨🚨 4,502.70 #BTC ($95,456,555) aggregated inflows to
-                            #Coinbase Pro
-                        </p>
-                        </div>
-                    </td>
-                    </tr>
+                    {Object.values(inflowsDataBtc).map((items,key)=>{
+                                            
+                        return(
+                            <>
+                                <tr key={key}>
+                                    {items.map((value, index)=>{    
+                                        return<td key={index}>{value.split('(S')[0]}</td>
+                                    })}
+                                    </tr>
+                            </>
+                        )
+                    })}
                 </tbody>
                 </table>
             </div>
@@ -197,13 +207,18 @@ export default function Home() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>434.37K</td>
-                    <td>68.32K</td>
-                    <td>63.64K</td>
-                    <td>57.68K</td>
-                    <td>57.14K</td>
-                    </tr>
+                    {Object.values(topExchangesVolumeBtc).map((items,key)=>{
+                                            
+                        return(
+                            <>
+                                <tr key={key}>
+                                    {items.map((value, index)=>{    
+                                        return<td key={index}>{value}</td>
+                                    })}
+                                    </tr>
+                            </>
+                        )
+                    })}
                 </tbody>
                 </table>
             </div>
@@ -244,27 +259,18 @@ export default function Home() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>APE</td>
-                    <td>4.942900</td>
-                    <td>4.734300</td>
-                    <td>5.258900</td>
-                    <td className="change">3.16%</td>
-                    </tr>
-                    <tr>
-                    <td>FLOW</td>
-                    <td>1.727500</td>
-                    <td>1.638300</td>
-                    <td>1.775700</td>
-                    <td className="change">3.02%</td>
-                    </tr>
-                    <tr>
-                    <td>MANA</td>
-                    <td>0.953500</td>
-                    <td>0.920200</td>
-                    <td>1.005800</td>
-                    <td className="change">0.74%</td>
-                    </tr>
+                {Object.values(top3AltcoinsGainers).map((items,key)=>{
+                                    
+                    return(
+                        <>
+                            <tr key={key}>
+                                {items.map((value, index)=>{    
+                                    return<td key={index}>{value}</td>
+                                })}
+                                </tr>
+                        </>
+                    )
+                })}
                 </tbody>
                 </table>
             </div>
@@ -284,27 +290,18 @@ export default function Home() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>ATOM</td>
-                    <td>7.632300</td>
-                    <td>7.507800</td>
-                    <td>8.219000</td>
-                    <td className="change">-7.14%</td>
-                    </tr>
-                    <tr>
-                    <td>DOT</td>
-                    <td>7.573100</td>
-                    <td>7.470600</td>
-                    <td>7.949900</td>
-                    <td className="change">-4.71%</td>
-                    </tr>
-                    <tr>
-                    <td>AVAX</td>
-                    <td>19.148500</td>
-                    <td>18.727300</td>
-                    <td>20.088600</td>
-                    <td className="change">-4.13%</td>
-                    </tr>
+                {Object.values(top3AltcoinsLlosers).map((items,key)=>{
+                                    
+                    return(
+                        <>
+                            <tr key={key}>
+                                {items.map((value, index)=>{    
+                                    return<td key={index}>{value}</td>
+                                })}
+                                </tr>
+                        </>
+                    )
+                })}
                 </tbody>
                 </table>
             </div>
@@ -326,27 +323,18 @@ export default function Home() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>VALUE</td>
-                    <td>0.555400</td>
-                    <td>0.205200</td>
-                    <td>0.592600</td>
-                    <td className="change">166.76%</td>
-                    </tr>
-                    <tr>
-                    <td>HIVE</td>
-                    <td>0.617800</td>
-                    <td>0.420500</td>
-                    <td>0.665200</td>
-                    <td className="change">34.86%</td>
-                    </tr>
-                    <tr>
-                    <td>AST</td>
-                    <td>0.114000</td>
-                    <td>0.084700</td>
-                    <td>0.147900</td>
-                    <td className="change">30.73%</td>
-                    </tr>
+                {Object.values(top3GainersUsdt24).map((items,key)=>{
+                                    
+                    return(
+                        <>
+                            <tr key={key}>
+                                {items.map((value, index)=>{    
+                                    return<td key={index}>{value}</td>
+                                })}
+                                </tr>
+                        </>
+                    )
+                })}
                 </tbody>
                 </table>
             </div>
@@ -366,27 +354,18 @@ export default function Home() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>COL</td>
-                    <td>0.714400</td>
-                    <td>0.618300</td>
-                    <td>0.903100</td>
-                    <td className="change">-20.89%</td>
-                    </tr>
-                    <tr>
-                    <td>USTC</td>
-                    <td>0.017700</td>
-                    <td>0.016800</td>
-                    <td>0.025000</td>
-                    <td className="change">-16.51%</td>
-                    </tr>
-                    <tr>
-                    <td>UPI</td>
-                    <td>0.018900</td>
-                    <td>0.018400</td>
-                    <td>0.028900</td>
-                    <td className="change">-15.63%</td>
-                    </tr>
+                {Object.values(top3LosersUsdt24).map((items,key)=>{
+                                    
+                    return(
+                        <>
+                            <tr key={key}>
+                                {items.map((value, index)=>{    
+                                    return<td key={index}>{value}</td>
+                                })}
+                                </tr>
+                        </>
+                    )
+                })}
                 </tbody>
                 </table>
             </div>

@@ -12,7 +12,7 @@ export default function Topgainerlooser() {
 
     useEffect(() => {
 
-        axios.get(`https://qberg.mn/api/fetchCryptoFirstData`,{
+        axios.get(`https://qberg.mn/api/fetchLooserGainer`,{
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
