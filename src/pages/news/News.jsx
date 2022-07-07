@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import Footer from '../../components/footer/Footer'
 import Navbar from '../../components/navbar/Navbar'
 import Topbar from '../../components/topbar/Topbar'
@@ -23,6 +24,18 @@ return (
                                     )
                                 </h3>
                             </div>
+                        </div>
+                        <div className="col-6">
+                            <a className="twitter-timeline" data-height="650" href="https://twitter.com/AdsMarkaz?ref_src=twsrc%5Etfw">Tweets by AdsMarkaz</a> 
+                            <Helmet>
+                                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                            </Helmet>
+                        </div>
+                        <div className="col-6 bg-white">
+                            <div loading="lazy" data-mc-src="325f2653-c759-4f94-9eb0-5f481262ff94#null"></div>
+                            <Helmet>
+                            <script  src="https://cdn2.woxo.tech/a.js#62c70ed94fd86c2e0db63013"  async data-usrc></script>
+                            </Helmet>
                         </div>
                     </div>
                 </div>
