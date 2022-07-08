@@ -19,7 +19,7 @@ export default function Inflowdata() {
             </div>
             <div className="row overlay position-relative bg-light mt20">
             <div className="col-lg-12">
-            <BarChart />
+              <BarChart />
             </div>
             </div>
         </div>
